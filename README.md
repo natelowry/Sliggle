@@ -1,1 +1,1 @@
-# Sliggle
+# SlackSnap
