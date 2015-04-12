@@ -41,7 +41,7 @@
                 processData: false,
                 contentType: false,
                 error: function (jqXHR, textStatus, errorMessage) {
-                    //console.log(errorMessage);
+                    $('#error').text(errorMessage);
                 },
                 success: function (data) {
                     //console.log(data);
@@ -74,9 +74,8 @@
                 email: $('#username').val(),
                 password: $('#password').val(),
                 remember: 'on'
-
-            }, function (data) {
-                console.log(data);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                $('#error').text(errorMessage);
             });
 
         });
