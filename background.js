@@ -9,7 +9,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
   	id: "slackSnapID",
     innerBounds: {
       width: 600,
-      height: 400
+      height: 500
     }
   });
 });

@@ -56,20 +56,26 @@
 <body>
     <div>
         Base URL:
-        <input id="baseUrl" type="text" />.slack.com
+        <input class="store-options" id="baseUrl" type="text" />.slack.com
     </div>
+    <br />
     <div>
         Email:
-        <input id="username" type="text" />
+        <input class="store-options" id="username" type="text" />
         Password:
         <input id="password" type="password" />
+    </div>
+    <br />
+    <div>
+        Refresh interval (seconds):
+        <input class="store-options" id="refreshInterval" type="number" value="60" />
     </div>
     <br />
     <div>
         <button id="login">Login</button> <button id="takeBtn">Take a picture</button>
         <button id="upload">Upload!</button>
         <button id="runForever">Run Forever!</button>
-        <button id="stop">Stop!</button>
+        <button id="stop" disabled="disabled">Stop!</button>
     </div>
     <br />
     <canvas id="canvas" style="display: none;" width="320" height="240"></canvas>

@@ -1,9 +1,6 @@
 (function ($) {
 
     'use strict';
-    var options = {
-        uploadRateInSeconds: 60
-    };
 
     var currentStream = null; // keep track of current stream
 
@@ -55,7 +52,7 @@
                             'crop': '1',
                             'crumb': submitCrumb,
                             'id': submitId,
-                            'cropbox': '0,0,240' //TODO: better cropping?
+                            'cropbox': '40,0,240' //TODO: better cropping?
                         }
                     });
                 }
@@ -64,7 +61,7 @@
         });
     }
 
-    function storeCredentials() {
+    function storeOptions() {
         chrome.storage.sync.set({ 'username': $('#username').val() });
         chrome.storage.sync.set({ 'baseUrl': $('#baseUrl').val() });
     }
@@ -139,8 +136,11 @@
     $('#takeBtn').click(takePicture);
 
     $('#login').click(function () {
-        storeCredentials();
         login();
+    });
+
+    $('.store-options').change(function () {
+        storeOptions();
     });
 
     $('#upload').click(function () {
@@ -149,13 +149,17 @@
 
     var interval;
     $('#runForever').click(function () {
+        $('#runForever').attr('disabled', 'disabled');
+        $('#stop').attr('disabled', null);
         interval = window.setInterval(function () {
             takePicture();
             window.setTimeout(uploadPicture, 6000);
-        }, 1000 * options.uploadRateInSeconds);
+        }, 1000 * $('#refreshInterval').val());
     });
 
     $('#stop').click(function () {
+        $('#stop').attr('disabled', 'disabled');
+        $('#runForever').attr('disabled', null);
         window.clearInterval(interval);
     });
 
