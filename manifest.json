@@ -1,6 +1,6 @@
 {
   "name": "SlackSnap",
-  "version": "0.1",
+  "version": "0.1.1",
   "manifest_version": 2,
   "icons": {
     "16": "slack-snap.png",
