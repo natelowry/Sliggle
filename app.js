@@ -86,10 +86,18 @@
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 
         navigator.getUserMedia({
-            video: true,
+            video: {
+                mandatory: {
+                    maxWidth: 320,
+                    maxHeight: 240
+                }
+            },
             audio: false
         }, function (stream) {
             var videoElm = $('#video')[0];
+            $('#video').show();
+            $('#canvas').hide();
+
             videoElm.src = URL.createObjectURL(stream);
 
             videoElm.onplay = function () {
@@ -119,6 +127,9 @@
         context.drawImage(videoElement, 0, 0, 320, 240);
 
         currentStream.stop();
+
+        $('#video').hide();
+        $('#canvas').show();
     }
 
     $('#takeBtn').click(takePicture);
