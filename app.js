@@ -13,6 +13,7 @@
     }
 
     function uploadPicture() {
+        clearError();
         $.get(photoUrl(), function (data) {
             var imageCrumb = data.match('type="hidden" name="crumb" value="(.*)"')[1];
             $("#crumb").val(imageCrumb);
@@ -64,18 +65,28 @@
     function storeOptions() {
         chrome.storage.sync.set({ 'username': $('#username').val() });
         chrome.storage.sync.set({ 'baseUrl': $('#baseUrl').val() });
+        chrome.storage.sync.set({ 'refreshInterval': $('#refreshInterval').val() });
+    }
+
+    function clearError() {
+        $('#error').text('');
     }
 
     function login() {
+        clearError();
         $.get(baseUrl(), function (data) {
             var loginCrumb = data.match('type="hidden" name="crumb" value="(.*)"')[1];
 
-            $.post(baseUrl(), {
+            $.post(baseUrl(), { //302 = success, 200 = fail
                 signin: '1',
                 crumb: loginCrumb,
                 email: $('#username').val(),
                 password: $('#password').val(),
                 remember: 'on'
+            }).done(function (data, textStatus, jqXHR) {
+                if (jqXHR.status === 200) {
+                    $('#error').text("Error logging in, check your credentials");
+                }
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 $('#error').text(errorMessage);
             });
@@ -84,6 +95,7 @@
     }
 
     function enableCamera() {
+        clearError();
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 
         navigator.getUserMedia({
@@ -110,7 +122,7 @@
             };
         }, function (e) {
             currentStream = null;
-            console.error(e);
+            $('#error').text(e.message);
         });
     }
 
@@ -164,9 +176,10 @@
     });
 
     $(document).ready(function () {
-        chrome.storage.sync.get(['baseUrl', 'username'], function (data) {
+        chrome.storage.sync.get(['baseUrl', 'username', 'refreshInterval'], function (data) {
             $('#baseUrl').val(data.baseUrl);
             $('#username').val(data.username);
+            $('#refreshInterval').val(data.refreshInterval);
         });
     });
 }(jQuery));
