@@ -137,7 +137,7 @@
         var canvasElement = $('#canvas')[0];
         var context = canvasElement.getContext('2d');
 
-        context.drawImage(videoElement, 0, 0, 320, 240);
+        context.drawImage(videoElement, 40, 0, 200, 240, 0, 0, 240, 240)
 
         currentStream.stop();
 
