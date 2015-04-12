@@ -64,6 +64,11 @@
         });
     }
 
+    function storeCredentials() {
+        chrome.storage.sync.set({ 'username': $('#username').val() });
+        chrome.storage.sync.set({ 'baseUrl': $('#baseUrl').val() });
+    }
+
     function login() {
         $.get(baseUrl(), function (data) {
             var loginCrumb = data.match('type="hidden" name="crumb" value="(.*)"')[1];
@@ -134,6 +139,7 @@
     $('#takeBtn').click(takePicture);
 
     $('#login').click(function () {
+        storeCredentials();
         login();
     });
 
@@ -151,5 +157,12 @@
 
     $('#stop').click(function () {
         window.clearInterval(interval);
+    });
+
+    $(document).ready(function () {
+        chrome.storage.sync.get(['baseUrl', 'username'], function (data) {
+            $('#baseUrl').val(data.baseUrl);
+            $('#username').val(data.username);
+        });
     });
 }(jQuery));

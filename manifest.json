@@ -13,6 +13,7 @@
   },
   "permissions": [
     "videoCapture",
+    "storage",
     "*://*.slack.com/*"
   ]
 }
