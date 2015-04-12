@@ -163,6 +163,8 @@
     $('#runForever').click(function () {
         $('#runForever').attr('disabled', 'disabled');
         $('#stop').attr('disabled', null);
+        takePicture();
+        window.setTimeout(uploadPicture, 6000);
         interval = window.setInterval(function () {
             takePicture();
             window.setTimeout(uploadPicture, 6000);
