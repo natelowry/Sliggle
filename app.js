@@ -116,7 +116,7 @@
             videoElm.onplay = function () {
                 if (currentStream !== null) {
                     // stop previous stream
-                    currentStream.stop();
+                    currentStream.getVideoTracks()[0].stop();
                 }
                 currentStream = stream;
             };
@@ -139,7 +139,7 @@
 
         context.drawImage(videoElement, 40, 0, 200, 240, 0, 0, 240, 240)
 
-        currentStream.stop();
+        currentStream.getVideoTracks()[0].stop();
 
         $('#video').hide();
         $('#canvas').show();
